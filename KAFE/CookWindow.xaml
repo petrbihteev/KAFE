@@ -1,0 +1,37 @@
+﻿<Window x:Class="KAFE.CookWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KAFE"
+        mc:Ignorable="d"
+        Title="CookWindow" WindowStartupLocation="CenterScreen" MaxHeight="600" MinHeight="600" MaxWidth="1000" MinWidth="1000" Icon="Images/logo.png" Height="600" Width="1000">
+    <Grid>
+        <Button x:Name="backtomainwindow" Margin="10,10,933.6,509.4" Content="←" FontSize="24" Click="backtomainwindow_Click"/>
+        <DataGrid Name="datagridorder" AutoGenerateColumns="False" IsReadOnly="True" ColumnWidth="*" HorizontalAlignment="Left" Height="440" Margin="56,81,0,0" VerticalAlignment="Top" Width="884" SelectionChanged="datagridorder_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Номер заказа" Binding="{Binding ID_Order}"/>
+                <DataGridTextColumn Header="Столик" Binding="{Binding Tables.NameTable}"/>
+                <DataGridTextColumn Header="Официант" Binding="{Binding Users.LastName}"/>
+                <DataGridTextColumn Header="Способ оплаты" Binding="{Binding WayPay.NameWayPay}"/>
+                <DataGridTextColumn Header="Статус заказа" Binding="{Binding StatusOrder.NameStatusOrder}"/>
+                <DataGridTextColumn Header="Дата заказа" Binding="{Binding DateOrder,StringFormat=dd.MM.yyyy}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid x:Name="gridstatus" Background="White" Visibility="Hidden">
+            <Label Content="Выберите статус заказа" FontSize="24" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="57" Width="295" Margin="597,171,101.6,342.4"/>
+            <ComboBox Name="combostatus" HorizontalAlignment="Left" FontSize="24" Margin="587,233,0,0" VerticalAlignment="Top" Width="295" Height="51"/>
+            <Button x:Name="savestatus" Content="Изменить статус" FontSize="24" HorizontalAlignment="Left" Margin="626,349,0,0" VerticalAlignment="Top" Width="211" Height="59" Click="savestatus_Click"/>
+            <TextBlock x:Name="txttable" HorizontalAlignment="Left" FontSize="24" Margin="85,125,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="37" Width="289"/>
+            <TextBlock x:Name="txtwaiter" HorizontalAlignment="Left" FontSize="24" Margin="85,187,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="37" Width="289"/>
+            <TextBlock x:Name="txtstatus" HorizontalAlignment="Left" FontSize="24" Margin="85,247,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="37" Width="289"/>
+            <Button Name="btntoback" Content="Вернуться обратно" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="126" Height="40" Click="btntoback_Click"/>
+            <DataGrid x:Name="datagridfoodorder" HorizontalAlignment="Left" AutoGenerateColumns="False" IsReadOnly="True" ColumnWidth="*" Height="248" Margin="85,312,0,0" VerticalAlignment="Top" Width="250">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Блюдо" Binding="{Binding Food.NameFood}"/>
+                    <DataGridTextColumn Header="Количество" Binding="{Binding Quantity}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Window>

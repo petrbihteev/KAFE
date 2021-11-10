@@ -1,0 +1,177 @@
+﻿<Window x:Class="KAFE.AdminWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KAFE"
+        mc:Ignorable="d"
+        Title="AdminWindow" WindowStartupLocation="CenterScreen" MaxHeight="600" MinHeight="600" MaxWidth="1000" MinWidth="1000" Icon="Images/logo.png" Height="600" Width="1000">
+    <Grid>
+        <Grid x:Name="gridadduser" Visibility="Hidden">
+            <Label Name="labeluser" Content="Добавление сотрудника" FontSize="36" HorizontalAlignment="Center" Margin="274,24,246.6,460.4" Width="473"/>
+            <StackPanel Orientation="Vertical" Margin="67,166,587.6,112.4">
+                <StackPanel Orientation="Horizontal">
+                    <Label FontSize="18" Content="Фамилия:"/>
+                    <TextBox Margin="5 0 0 0" x:Name="lastnametxt" Width="170" FontSize="18"/>
+                </StackPanel>
+                <StackPanel Margin="0 10 0 0" Orientation="Horizontal">
+                    <Label FontSize="18" Content="Имя:"/>
+                    <TextBox Margin="43 0 0 0" x:Name="nametxt" Width="170" FontSize="18"/>
+                </StackPanel>
+                <StackPanel Margin="0 10 0 0" Orientation="Horizontal">
+                    <Label FontSize="18" Content="Отчество:"/>
+                    <TextBox Margin="3 0 0 0" x:Name="middlenametxt" Width="170" FontSize="18"/>
+                </StackPanel>
+                <StackPanel Margin="0 10 0 0" Orientation="Horizontal">
+                    <Label FontSize="18" Content="Логин:"/>
+                    <TextBox Margin="29 0 0 0" x:Name="logintxt" Width="170" FontSize="18"/>
+                </StackPanel>
+                <StackPanel Margin="0 10 0 0" Orientation="Horizontal">
+                    <Label FontSize="18" Content="Пароль:"/>
+                    <PasswordBox Margin="18 0 0 0" x:Name="passwordtxt" Width="170" FontSize="18"/>
+                </StackPanel>
+                <StackPanel Margin="0 10 0 0" Orientation="Horizontal">
+                    <Label FontSize="18" Content="Роль:"/>
+                    <ComboBox Margin="40 0 0 0" x:Name="rolecombo" SelectedItem="{Binding RoleUsers}" DisplayMemberPath="RoleName" Width="170" FontSize="18"/>
+                </StackPanel>
+            </StackPanel>
+            <Label Content="Фото сотрудника" FontSize="18" Margin="497,121,307.6,392.4"/>
+            <Image Name="photopersonal" Stretch="Uniform" Margin="477,183,288.6,131.4"/>
+            <Label Content="Фото договора" FontSize="18" Margin="768,121,57.6,392.4"/>
+            <Image Name="photocontract" Stretch="Uniform" Margin="729,184,36.6,130.4"/>
+            <Button x:Name="addpersonalphoto" Content="Выбрать фото сотрудника" HorizontalAlignment="Left" Margin="477,471,0,0" VerticalAlignment="Top" Width="228" Height="30" Click="addpersonalphoto_Click"/>
+            <Button x:Name="addcontractphoto" Content="Выбрать фото договора" HorizontalAlignment="Left" Margin="729,471,0,0" VerticalAlignment="Top" Width="228" Height="30" Click="addcontractphoto_Click"/>
+            <Button Name="saveadduser" Content="Сохранить сотрудника" FontSize="18" HorizontalAlignment="Left" Margin="85,467,0,0" VerticalAlignment="Top" Width="240" Height="53" Click="saveadduser_Click"/>
+            <StackPanel Background="Transparent" x:Name="dropphotopersonal" AllowDrop="True" Drop="dropphotopersonal_Drop" HorizontalAlignment="Left" Height="256" Margin="477,183,0,0" VerticalAlignment="Top" Width="228">
+                <Border BorderBrush="Black" BorderThickness="2" Height="256"/>
+            </StackPanel>
+            <StackPanel Background="Transparent" x:Name="dropphotocontract" AllowDrop="True" Drop="dropphotocontract_Drop" HorizontalAlignment="Left" Height="256" Margin="729,184,0,0" VerticalAlignment="Top" Width="228">
+                <Border BorderBrush="Black" BorderThickness="2" Height="256"/>
+            </StackPanel>
+            <Button Content="←" FontSize="29" HorizontalContentAlignment="Center"  HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="40" Height="40" Click="Button_Click_2"/>
+            <Button x:Name="btndeleteuser" Visibility="Hidden" Content="Удалить сотрудника" FontSize="18" HorizontalAlignment="Left" Margin="85,467,0,0" VerticalAlignment="Top" Width="240" Height="53" Click="btndeleteuser_Click_1"/>
+            <TextBlock x:Name="iduser" Visibility="Hidden"/>
+        </Grid>
+        <Grid x:Name="gridosnova" Visibility="Visible">
+            <Button Name="btngriduser" Content="Сотрудники" FontSize="18" HorizontalAlignment="Left" Margin="73,234,0,0" VerticalAlignment="Top" Width="150" Height="69" Click="griduser_Click"/>
+            <Button Name="btngridorder" Content="Заказы" FontSize="18" HorizontalAlignment="Left" Margin="294,234,0,0" VerticalAlignment="Top" Width="150" Height="69" Click="btngridorder_Click"/>
+            <Button Name="btngridshifts" Content="Смены" FontSize="18" HorizontalAlignment="Left" Margin="531,234,0,0" VerticalAlignment="Top" Width="150" Height="69" Click="btngridshifts_Click"/>
+            <Button Name="btngridreport" Content="Отчеты" FontSize="18" HorizontalAlignment="Left" Margin="768,234,0,0" VerticalAlignment="Top" Width="150" Height="69" Click="btngridreport_Click"/>
+            <Button x:Name="backtomainwindow" Margin="10,10,933.6,509.4" Content="←" FontSize="24" Click="backtomainwindow_Click"/>
+        </Grid>
+        <Grid x:Name="griduser" Visibility="Hidden">
+            <ListView  Name="listviewuser" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Height="378" Margin="10,182,0,0" VerticalAlignment="Top" Width="974" SelectionChanged="listviewuser_SelectionChanged">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"></WrapPanel>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="20" Height="250" Width="235">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition Height="auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Image Name="ttimage" Height="150" Width="100" Grid.Row="1" Stretch="Uniform"  HorizontalAlignment="Center" Margin="5">
+                                <Image.Source>
+                                    <Binding Path="PersonalPhoto"/>
+                                </Image.Source>
+                            </Image>
+                            <TextBlock Foreground="Black" FontFamily="Century Gothic" VerticalAlignment="Center" TextAlignment="Center" Width="390" TextWrapping="Wrap" HorizontalAlignment="Center"
+                                   Margin="5 5" FontSize="12" FontWeight="Bold" Grid.Row="0">
+                                <Run Text="{Binding LastName}"/>
+                                <Run Text="{Binding FirstName}"/>
+                                <Run Text="{Binding MiddleName}"/>
+                            </TextBlock>
+                            <TextBlock Text="{Binding RoleUsers.RoleName, StringFormat={}Специальность: {0}}" FontFamily="Century Gothic" Grid.Row="2" Margin="5 5 5 15" Foreground="Black" HorizontalAlignment="Center" FontSize="12" FontWeight="Bold"></TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Content="←" FontSize="29" HorizontalContentAlignment="Center"  HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="40" Height="40" Click="Button_Click"/>
+            <Button Content="Добавить сотрудника" HorizontalAlignment="Left" Margin="835,135,0,0" VerticalAlignment="Top" Width="149" Height="42" Click="Button_Click_1"/>
+            <Button x:Name="btnworkuser" Content="Работающие сотрудники" HorizontalAlignment="Left" Margin="10,135,0,0" VerticalAlignment="Top" Width="149" Height="42" Click="btnworkuser_Click"/>
+            <Button Content="Уволенные сотрудники" HorizontalAlignment="Left" Margin="164,135,0,0" VerticalAlignment="Top" Width="149" Height="42" Click="btndeleteuser_Click"/>
+        </Grid>
+        <Grid x:Name="gridorder" Visibility="Hidden">
+            <DataGrid Name="datagridorder" AutoGenerateColumns="False" IsReadOnly="True" ColumnWidth="*" HorizontalAlignment="Left" Height="440" Margin="56,81,0,0" VerticalAlignment="Top" Width="884" SelectionChanged="datagridorder_SelectionChanged">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Номер заказа" Binding="{Binding ID_Order}"/>
+                    <DataGridTextColumn Header="Столик" Binding="{Binding Tables.NameTable}"/>
+                    <DataGridTextColumn Header="Официант" Binding="{Binding Users.LastName}"/>
+                    <DataGridTextColumn Header="Способ оплаты" Binding="{Binding WayPay.NameWayPay}"/>
+                    <DataGridTextColumn Header="Статус заказа" Binding="{Binding StatusOrder.NameStatusOrder}"/>
+                    <DataGridTextColumn Header="Дата заказа" Binding="{Binding DateOrder,StringFormat=dd.MM.yyyy}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Content="←" FontSize="29" HorizontalContentAlignment="Center"  HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="40" Height="40" Click="Button_Click"/>
+        </Grid>
+        <Grid x:Name="gridaddfood" Visibility="Hidden">
+            <Label Content="Просмотр заказа" FontSize="36" HorizontalAlignment="Left" Margin="311,10,0,0" VerticalAlignment="Top"/>
+            <DataGrid x:Name="datagridfoodorder" HorizontalAlignment="Left" AutoGenerateColumns="False" IsReadOnly="True" ColumnWidth="*" Height="408" Margin="211,152,0,0" VerticalAlignment="Top" Width="773" SelectionChanged="datagridfoodorder_SelectionChanged">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Блюдо" Binding="{Binding Food.NameFood}"/>
+                    <DataGridTextColumn Header="Количество" Binding="{Binding Quantity}"/>
+                    <DataGridTextColumn Header="Цена" Binding="{Binding Food.Price, StringFormat=0}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Label Content="Тип блюда:"  FontSize="24" HorizontalAlignment="Left" Margin="0,152,0,0" VerticalAlignment="Top"/>
+            <ComboBox Name="combotypefood" DisplayMemberPath="NameTypeFood" HorizontalAlignment="Left" FontSize="18" Margin="0,199,0,0" VerticalAlignment="Top" Width="206" Height="36" DropDownClosed="combotypefood_DropDownClosed"/>
+            <Label Content="Блюдо:" FontSize="24" HorizontalAlignment="Left" Margin="0,240,0,0" VerticalAlignment="Top"/>
+            <ComboBox Name="combofood" HorizontalAlignment="Left" DisplayMemberPath="NameFood" FontSize="18" Margin="0,287,0,0" VerticalAlignment="Top" Width="206" Height="36"/>
+            <Label Content="Количество:" FontSize="24" HorizontalAlignment="Left" Margin="0,328,0,0" VerticalAlignment="Top"/>
+            <ComboBox Name="comboquantity" HorizontalAlignment="Left" FontSize="18" Margin="0,370,0,0" VerticalAlignment="Top" Width="206" Height="36">
+                <ComboBoxItem Content="1"/>
+                <ComboBoxItem Content="2"/>
+                <ComboBoxItem Content="3"/>
+                <ComboBoxItem Content="4"/>
+                <ComboBoxItem Content="5"/>
+            </ComboBox>
+            <Button Name="btnaddfood" Content="Добавить" FontSize="18" HorizontalAlignment="Left" Margin="48,429,0,0" VerticalAlignment="Top" Width="106" Height="48" Click="btnaddfood_Click"/>
+            <Label Content="Общая стоимость:" FontSize="24" HorizontalAlignment="Left" Margin="613,105,0,0" VerticalAlignment="Top"/>
+            <TextBlock Name="txtsummoney" HorizontalAlignment="Left" FontSize="24" Margin="829,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155" Height="42"/>
+            <Button Content="←" FontSize="24" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="46" Height="50" Click="backtopenorder_Click"/>
+        </Grid>
+        <Grid x:Name="gridsmena" Visibility="Hidden">
+            <Button Content="←" FontSize="29" HorizontalContentAlignment="Center"  HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="40" Height="40" Click="Button_Click"/>
+            <Label Content="Выберите дату:" FontSize="24" HorizontalAlignment="Left" Margin="613,200,0,0" VerticalAlignment="Top" Width="260"/>
+            <DataGrid x:Name="datagridstaff" AutoGenerateColumns="False" ColumnWidth="*" IsReadOnly="True" HorizontalAlignment="Left" Height="155" Margin="49,105,0,0" VerticalAlignment="Top" Width="497" SelectionChanged="datagridstaff_SelectionChanged">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}"/>
+                    <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}"/>
+                    <DataGridTextColumn Header="Отчество" Binding="{Binding MiddleName}"/>
+                    <DataGridTextColumn Header="Профессия" Binding="{Binding RoleUsers.RoleName}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <ComboBox Name="combosmena" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Top" Width="260" Margin="613,247,0,0" DropDownClosed="combosmena_DropDownClosed" Height="49"/>
+            <Label Content="Работники:" FontSize="24" HorizontalAlignment="Left" Margin="49,58,0,0" VerticalAlignment="Top" Width="260"/>
+            <DataGrid x:Name="datagridsmenastaff" HorizontalAlignment="Left" AutoGenerateColumns="False" ColumnWidth="*" IsReadOnly="True" Height="170" Margin="49,390,0,0" VerticalAlignment="Top" Width="497" SelectionChanged="datagridsmenastaff_SelectionChanged">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Фамилия" Binding="{Binding Users.LastName}"/>
+                    <DataGridTextColumn Header="Имя" Binding="{Binding Users.FirstName}"/>
+                    <DataGridTextColumn Header="Отчество" Binding="{Binding Users.MiddleName}"/>
+                    <DataGridTextColumn Header="Профессия" Binding="{Binding Users.RoleUsers.RoleName}"/>
+                    <DataGridTextColumn Header="Дата смены" Binding="{Binding DateShift,StringFormat=dd.MM.yyyy}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Label Content="Вы выбрали:" FontSize="24" HorizontalAlignment="Left" Margin="613,74,0,0" VerticalAlignment="Top" Width="260"/>
+            <TextBlock x:Name="txtuserlastname" HorizontalAlignment="Left" FontSize="24"  Margin="613,121,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Height="39" Width="260"/>
+            <Button x:Name="btnaddsmena" Content="Добавить работника на смену" HorizontalAlignment="Left" Margin="641,328,0,0" VerticalAlignment="Top" Width="201" Height="62" Click="btnaddsmena_Click"/>
+            <Label Content="Работники на смене:" FontSize="24" HorizontalAlignment="Left" Margin="49,328,0,0" VerticalAlignment="Top" Width="260"/>
+
+        </Grid>
+        <Grid x:Name="gridreport" Visibility="Hidden">
+            <Button Content="←" FontSize="29" HorizontalContentAlignment="Center"  HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="40" Height="40" Click="Button_Click"/>
+            <DatePicker Name="datapicker" HorizontalAlignment="Left" FontSize="24" Margin="160,200,0,0" VerticalAlignment="Top" Width="287"/>
+            <Button x:Name="btnreportdata" Content="Сформировать отчет по дате" FontSize="18" HorizontalAlignment="Left" Margin="160,249,0,0" VerticalAlignment="Top" Width="287" Height="102" Click="btnreportdata_Click"/>
+            <Button Name="btnreportactive" Content="Отчет по оплаченным заказам" FontSize="18" HorizontalAlignment="Left" Margin="592,249,0,0" VerticalAlignment="Top" Width="287" Height="102" Click="btnreportactive_Click"/>
+            <Button x:Name="btngotopdf" Visibility="Hidden" Content="PDF" FontSize="18" HorizontalAlignment="Left" Margin="190,402,0,0" VerticalAlignment="Top" Width="63" Height="48" Click="btngotopdf_Click"/>
+            <Button x:Name="btngotoexcel" Visibility="Hidden" Content="Excel" FontSize="18" HorizontalAlignment="Left" Margin="339,402,0,0" VerticalAlignment="Top" Width="63" Height="48" Click="btngotoexcel_Click"/>
+            <Button x:Name="btngotopdfactive" Visibility="Hidden" Content="PDF" FontSize="18" HorizontalAlignment="Left" Margin="633,402,0,0" VerticalAlignment="Top" Width="63" Height="48" Click="btngotopdfactive_Click"/>
+            <Button x:Name="btngotoexcelactive" Visibility="Hidden" Content="Excel" FontSize="18" HorizontalAlignment="Left" Margin="779,402,0,0" VerticalAlignment="Top" Width="63" Height="48" Click="btngotoexcelactive_Click"/>
+
+        </Grid>
+    </Grid>
+</Window>
