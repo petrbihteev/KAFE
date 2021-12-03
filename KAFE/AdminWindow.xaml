@@ -152,6 +152,7 @@
                     <DataGridTextColumn Header="Имя" Binding="{Binding Users.FirstName}"/>
                     <DataGridTextColumn Header="Отчество" Binding="{Binding Users.MiddleName}"/>
                     <DataGridTextColumn Header="Профессия" Binding="{Binding Users.RoleUsers.RoleName}"/>
+                    <DataGridTextColumn Header="Столик" Binding="{Binding Tables.NameTable}"/>
                     <DataGridTextColumn Header="Дата смены" Binding="{Binding DateShift,StringFormat=dd.MM.yyyy}"/>
                 </DataGrid.Columns>
             </DataGrid>

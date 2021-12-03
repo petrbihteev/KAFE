@@ -477,6 +477,7 @@ namespace KAFE
                             datagridsmenastaff.ItemsSource = Helper.GetContext().WorkShift.Where(x => x.DateShift == todaysDate).ToList();
                             txtuserlastname.Text = "";
                             combosmena.Text = "";
+                            combotable.Text = "";
                             MessageBox.Show("Смена назначена!");
                         }
                     }
