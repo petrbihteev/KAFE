@@ -533,6 +533,8 @@ namespace KAFE
             {
                 var application = new Word.Application();
 
+                decimal summ = 0;
+
                 Word.Document document = application.Documents.Add();
 
                 Word.Paragraph paragraph1 = document.Paragraphs.Add();
@@ -598,8 +600,22 @@ namespace KAFE
                     cellRange = paymentstable.Cell(i + 2, 6).Range;
                     cellRange.Text = String.Format("{0:0.00}", sum) + " руб.";
 
+                    summ += sum;
+
                     //cellRange.InsertParagraphAfter();
                 }
+
+                cellRange.InsertParagraphAfter();
+                tablerange.InsertParagraphAfter();
+
+                Word.Paragraph paragraph2 = document.Paragraphs.Add();
+                Word.Range range2 = paragraph2.Range;
+                range2.Text = "Общая выручка - " + string.Format("{0:0.00}", summ) + " руб.";
+                paragraph2.set_Style("Заголовок");
+                paragraph2.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
+                range2.Font.Size = 18;
+                range2.InsertParagraphAfter();
+
                 document.SaveAs2(saveFileDialog.FileName, Word.WdExportFormat.wdExportFormatPDF);
                 btngotoexcel.Visibility = Visibility.Hidden;
                 btngotopdf.Visibility = Visibility.Hidden;
@@ -694,6 +710,8 @@ namespace KAFE
             {
                 var application = new Word.Application();
 
+                decimal summ = 0;
+
                 Word.Document document = application.Documents.Add();
 
                 Word.Paragraph paragraph1 = document.Paragraphs.Add();
@@ -758,9 +776,22 @@ namespace KAFE
                     }
                     cellRange = paymentstable.Cell(i + 2, 6).Range;
                     cellRange.Text = String.Format("{0:0.00}", sum) + " руб.";
+                    summ += sum;
 
                     //cellRange.InsertParagraphAfter();
                 }
+
+                cellRange.InsertParagraphAfter();
+                tablerange.InsertParagraphAfter();
+
+                Word.Paragraph paragraph2 = document.Paragraphs.Add();
+                Word.Range range2 = paragraph2.Range;
+                range2.Text = "Общая выручка - " + string.Format("{0:0.00}", summ) + " руб.";
+                paragraph2.set_Style("Заголовок");
+                paragraph2.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
+                range2.Font.Size = 18;
+                range2.InsertParagraphAfter();
+
                 document.SaveAs2(saveFileDialog.FileName, Word.WdExportFormat.wdExportFormatPDF);
                 btngotoexcelactive.Visibility = Visibility.Hidden;
                 btngotopdfactive.Visibility = Visibility.Hidden;

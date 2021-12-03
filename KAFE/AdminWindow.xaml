@@ -85,7 +85,6 @@
                                 <Run Text="{Binding FirstName}"/>
                                 <Run Text="{Binding MiddleName}"/>
                             </TextBlock>
-                            <TextBlock Text="{Binding RoleUsers.RoleName, StringFormat={}Специальность: {0}}" FontFamily="Century Gothic" Grid.Row="2" Margin="5 5 5 15" Foreground="Black" HorizontalAlignment="Center" FontSize="12" FontWeight="Bold"></TextBlock>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
