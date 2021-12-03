@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="58bae42c59794babae548a16ceab5fcb" Name="Diagram1">
+        <EntityTypeShape EntityType="CafeModel.Check" Width="1.5" PointX="5.25" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CafeModel.Food" Width="1.5" PointX="3" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="CafeModel.ListOrder" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="CafeModel.Orders" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CafeModel.RoleUsers" Width="1.5" PointX="1.5" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CafeModel.StatusOrder" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CafeModel.StatusUsers" Width="1.5" PointX="1.5" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CafeModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CafeModel.Tables" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CafeModel.TypeFood" Width="1.5" PointX="0.75" PointY="21.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CafeModel.Users" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CafeModel.WayPay" Width="1.5" PointX="0.75" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CafeModel.WorkShift" Width="1.5" PointX="6" PointY="4" IsExpanded="true" />
+        <AssociationConnector Association="CafeModel.FK_Check_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="CafeModel.FK_Food_TypeFood" ManuallyRouted="false" />
+        <AssociationConnector Association="CafeModel.FK_ListOrder_Food" ManuallyRouted="false" />
+        <AssociationConnector Association="CafeModel.FK_ListOrder_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="CafeModel.FK_Orders_StatusOrder" ManuallyRouted="false" />
+        <AssociationConnector Association="CafeModel.FK_Orders_Tables" ManuallyRouted="false" />
+        <AssociationConnector Association="CafeModel.FK_Orders_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="CafeModel.FK_Orders_WayPay" ManuallyRouted="false" />
+        <AssociationConnector Association="CafeModel.FK_Users_RoleUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="CafeModel.FK_Users_StatusUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="CafeModel.FK_WorkShift_Tables" ManuallyRouted="false" />
+        <AssociationConnector Association="CafeModel.FK_WorkShift_Users" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

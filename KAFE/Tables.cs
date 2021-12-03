@@ -18,6 +18,7 @@ namespace KAFE
         public Tables()
         {
             this.Orders = new HashSet<Orders>();
+            this.WorkShift = new HashSet<WorkShift>();
         }
     
         public int ID_Table { get; set; }
@@ -25,5 +26,7 @@ namespace KAFE
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Orders> Orders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WorkShift> WorkShift { get; set; }
     }
 }

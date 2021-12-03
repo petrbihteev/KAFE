@@ -39,6 +39,7 @@ namespace KAFE
             combosmena.Items.Add(todaysDate.AddDays(3).ToShortDateString());
             combosmena.Items.Add(todaysDate.AddDays(4).ToShortDateString());
             combosmena.Items.Add(todaysDate.AddDays(5).ToShortDateString());
+            combotable.ItemsSource = Helper.GetContext().Tables.ToList();
         }
         byte[] personalphotobyte = null;
         byte[] contractphotobyte = null;
@@ -463,10 +464,12 @@ namespace KAFE
                         }
                         else
                         {
+                            var idtable = Helper.GetContext().Tables.Where(x => x.NameTable == combotable.Text).FirstOrDefault();
                             WorkShift workShift = new WorkShift
                             {
                                 ID_User = idusersmena,
-                                DateShift = todaysDate
+                                DateShift = todaysDate,
+                                ID_Table = idtable.ID_Table
                             };
                             Helper.GetContext().WorkShift.Add(workShift);
                             Helper.GetContext().SaveChanges();

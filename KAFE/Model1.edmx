@@ -4,14 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Хранилище CafeModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище CafeModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Check">
           <Key>
             <PropertyRef Name="ID_Check" />
           </Key>
           <Property Name="ID_Check" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ID_Order" Type="int" Nullable="false" />
-          <Property Name="DateCheck" Type="date" Nullable="false" />
+          <Property Name="DateCheck" Type="datetime" Nullable="false" />
           <Property Name="TotalPrice" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="Food">
@@ -117,6 +117,7 @@
           <Property Name="ID_WorkShift" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DateShift" Type="date" Nullable="false" />
           <Property Name="ID_User" Type="int" Nullable="false" />
+          <Property Name="ID_Table" Type="int" />
         </EntityType>
         <Association Name="FK_Check_Orders">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
@@ -238,6 +239,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WorkShift_Tables">
+          <End Role="Tables" Type="Self.Tables" Multiplicity="0..1" />
+          <End Role="WorkShift" Type="Self.WorkShift" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tables">
+              <PropertyRef Name="ID_Table" />
+            </Principal>
+            <Dependent Role="WorkShift">
+              <PropertyRef Name="ID_Table" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_WorkShift_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="WorkShift" Type="Self.WorkShift" Multiplicity="*" />
@@ -304,94 +317,40 @@
             <End Role="StatusUsers" EntitySet="StatusUsers" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <AssociationSet Name="FK_WorkShift_Tables" Association="Self.FK_WorkShift_Tables">
+            <End Role="Tables" EntitySet="Tables" />
+            <End Role="WorkShift" EntitySet="WorkShift" />
+          </AssociationSet>
           <AssociationSet Name="FK_WorkShift_Users" Association="Self.FK_WorkShift_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="WorkShift" EntitySet="WorkShift" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CafeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="CafeEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Check" EntityType="CafeModel.Check" />
-          <EntitySet Name="Food" EntityType="CafeModel.Food" />
-          <EntitySet Name="ListOrder" EntityType="CafeModel.ListOrder" />
-          <EntitySet Name="Orders" EntityType="CafeModel.Orders" />
-          <EntitySet Name="RoleUsers" EntityType="CafeModel.RoleUsers" />
-          <EntitySet Name="StatusOrder" EntityType="CafeModel.StatusOrder" />
-          <EntitySet Name="StatusUsers" EntityType="CafeModel.StatusUsers" />
-          <EntitySet Name="sysdiagrams" EntityType="CafeModel.sysdiagrams" />
-          <EntitySet Name="Tables" EntityType="CafeModel.Tables" />
-          <EntitySet Name="TypeFood" EntityType="CafeModel.TypeFood" />
-          <EntitySet Name="Users" EntityType="CafeModel.Users" />
-          <EntitySet Name="WayPay" EntityType="CafeModel.WayPay" />
-          <EntitySet Name="WorkShift" EntityType="CafeModel.WorkShift" />
-          <AssociationSet Name="FK_Check_Orders" Association="CafeModel.FK_Check_Orders">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="Check" EntitySet="Check" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Food_TypeFood" Association="CafeModel.FK_Food_TypeFood">
-            <End Role="TypeFood" EntitySet="TypeFood" />
-            <End Role="Food" EntitySet="Food" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ListOrder_Food" Association="CafeModel.FK_ListOrder_Food">
-            <End Role="Food" EntitySet="Food" />
-            <End Role="ListOrder" EntitySet="ListOrder" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ListOrder_Orders" Association="CafeModel.FK_ListOrder_Orders">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="ListOrder" EntitySet="ListOrder" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Orders_StatusOrder" Association="CafeModel.FK_Orders_StatusOrder">
-            <End Role="StatusOrder" EntitySet="StatusOrder" />
-            <End Role="Orders" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Orders_Tables" Association="CafeModel.FK_Orders_Tables">
-            <End Role="Tables" EntitySet="Tables" />
-            <End Role="Orders" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Orders_Users" Association="CafeModel.FK_Orders_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Orders" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Orders_WayPay" Association="CafeModel.FK_Orders_WayPay">
-            <End Role="WayPay" EntitySet="WayPay" />
-            <End Role="Orders" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Users_RoleUsers" Association="CafeModel.FK_Users_RoleUsers">
-            <End Role="RoleUsers" EntitySet="RoleUsers" />
-            <End Role="Users" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Users_StatusUsers" Association="CafeModel.FK_Users_StatusUsers">
-            <End Role="StatusUsers" EntitySet="StatusUsers" />
-            <End Role="Users" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="FK_WorkShift_Users" Association="CafeModel.FK_WorkShift_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="WorkShift" EntitySet="WorkShift" />
-          </AssociationSet>
-        </EntityContainer>
         <EntityType Name="Check">
           <Key>
             <PropertyRef Name="ID_Check" />
           </Key>
           <Property Name="ID_Check" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_Order" Type="Int32" Nullable="false" />
-          <Property Name="DateCheck" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="TotalPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <NavigationProperty Name="Orders" Relationship="CafeModel.FK_Check_Orders" FromRole="Check" ToRole="Orders" />
+          <Property Name="DateCheck" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Check_Orders" FromRole="Check" ToRole="Orders" />
         </EntityType>
         <EntityType Name="Food">
           <Key>
             <PropertyRef Name="ID_Food" />
           </Key>
           <Property Name="ID_Food" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NameFood" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="NameFood" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="ID_TypeFood" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="TypeFood" Relationship="CafeModel.FK_Food_TypeFood" FromRole="Food" ToRole="TypeFood" />
-          <NavigationProperty Name="ListOrder" Relationship="CafeModel.FK_ListOrder_Food" FromRole="Food" ToRole="ListOrder" />
+          <NavigationProperty Name="TypeFood" Relationship="Self.FK_Food_TypeFood" FromRole="Food" ToRole="TypeFood" />
+          <NavigationProperty Name="ListOrder" Relationship="Self.FK_ListOrder_Food" FromRole="Food" ToRole="ListOrder" />
         </EntityType>
         <EntityType Name="ListOrder">
           <Key>
@@ -401,8 +360,8 @@
           <Property Name="ID_Order" Type="Int32" Nullable="false" />
           <Property Name="ID_Food" Type="Int32" Nullable="false" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Food" Relationship="CafeModel.FK_ListOrder_Food" FromRole="ListOrder" ToRole="Food" />
-          <NavigationProperty Name="Orders" Relationship="CafeModel.FK_ListOrder_Orders" FromRole="ListOrder" ToRole="Orders" />
+          <NavigationProperty Name="Food" Relationship="Self.FK_ListOrder_Food" FromRole="ListOrder" ToRole="Food" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_ListOrder_Orders" FromRole="ListOrder" ToRole="Orders" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
@@ -414,42 +373,42 @@
           <Property Name="ID_WayPay" Type="Int32" Nullable="false" />
           <Property Name="ID_Status" Type="Int32" Nullable="false" />
           <Property Name="DateOrder" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Check" Relationship="CafeModel.FK_Check_Orders" FromRole="Orders" ToRole="Check" />
-          <NavigationProperty Name="ListOrder" Relationship="CafeModel.FK_ListOrder_Orders" FromRole="Orders" ToRole="ListOrder" />
-          <NavigationProperty Name="StatusOrder" Relationship="CafeModel.FK_Orders_StatusOrder" FromRole="Orders" ToRole="StatusOrder" />
-          <NavigationProperty Name="Tables" Relationship="CafeModel.FK_Orders_Tables" FromRole="Orders" ToRole="Tables" />
-          <NavigationProperty Name="Users" Relationship="CafeModel.FK_Orders_Users" FromRole="Orders" ToRole="Users" />
-          <NavigationProperty Name="WayPay" Relationship="CafeModel.FK_Orders_WayPay" FromRole="Orders" ToRole="WayPay" />
+          <NavigationProperty Name="Check" Relationship="Self.FK_Check_Orders" FromRole="Orders" ToRole="Check" />
+          <NavigationProperty Name="ListOrder" Relationship="Self.FK_ListOrder_Orders" FromRole="Orders" ToRole="ListOrder" />
+          <NavigationProperty Name="StatusOrder" Relationship="Self.FK_Orders_StatusOrder" FromRole="Orders" ToRole="StatusOrder" />
+          <NavigationProperty Name="Tables" Relationship="Self.FK_Orders_Tables" FromRole="Orders" ToRole="Tables" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Orders_Users" FromRole="Orders" ToRole="Users" />
+          <NavigationProperty Name="WayPay" Relationship="Self.FK_Orders_WayPay" FromRole="Orders" ToRole="WayPay" />
         </EntityType>
         <EntityType Name="RoleUsers">
           <Key>
             <PropertyRef Name="ID_Role" />
           </Key>
           <Property Name="ID_Role" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Users" Relationship="CafeModel.FK_Users_RoleUsers" FromRole="RoleUsers" ToRole="Users" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Users_RoleUsers" FromRole="RoleUsers" ToRole="Users" />
         </EntityType>
         <EntityType Name="StatusOrder">
           <Key>
             <PropertyRef Name="ID_StatusOrder" />
           </Key>
           <Property Name="ID_StatusOrder" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NameStatusOrder" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Orders" Relationship="CafeModel.FK_Orders_StatusOrder" FromRole="StatusOrder" ToRole="Orders" />
+          <Property Name="NameStatusOrder" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_StatusOrder" FromRole="StatusOrder" ToRole="Orders" />
         </EntityType>
         <EntityType Name="StatusUsers">
           <Key>
             <PropertyRef Name="ID_Status" />
           </Key>
           <Property Name="ID_Status" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StatusName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Users" Relationship="CafeModel.FK_Users_StatusUsers" FromRole="StatusUsers" ToRole="Users" />
+          <Property Name="StatusName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Users_StatusUsers" FromRole="StatusUsers" ToRole="Users" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
           </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="principal_id" Type="Int32" Nullable="false" />
           <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
@@ -460,43 +419,44 @@
             <PropertyRef Name="ID_Table" />
           </Key>
           <Property Name="ID_Table" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NameTable" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Orders" Relationship="CafeModel.FK_Orders_Tables" FromRole="Tables" ToRole="Orders" />
+          <Property Name="NameTable" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Tables" FromRole="Tables" ToRole="Orders" />
+          <NavigationProperty Name="WorkShift" Relationship="Self.FK_WorkShift_Tables" FromRole="Tables" ToRole="WorkShift" />
         </EntityType>
         <EntityType Name="TypeFood">
           <Key>
             <PropertyRef Name="ID_TypeFood" />
           </Key>
           <Property Name="ID_TypeFood" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NameTypeFood" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Food" Relationship="CafeModel.FK_Food_TypeFood" FromRole="TypeFood" ToRole="Food" />
+          <Property Name="NameTypeFood" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Food" Relationship="Self.FK_Food_TypeFood" FromRole="TypeFood" ToRole="Food" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="ID_User" />
           </Key>
           <Property Name="ID_User" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="MiddleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ID_Role" Type="Int32" Nullable="false" />
           <Property Name="ID_Status" Type="Int32" Nullable="false" />
-          <Property Name="PersonalPhoto" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
-          <Property Name="ContractPhoto" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="Orders" Relationship="CafeModel.FK_Orders_Users" FromRole="Users" ToRole="Orders" />
-          <NavigationProperty Name="RoleUsers" Relationship="CafeModel.FK_Users_RoleUsers" FromRole="Users" ToRole="RoleUsers" />
-          <NavigationProperty Name="StatusUsers" Relationship="CafeModel.FK_Users_StatusUsers" FromRole="Users" ToRole="StatusUsers" />
-          <NavigationProperty Name="WorkShift" Relationship="CafeModel.FK_WorkShift_Users" FromRole="Users" ToRole="WorkShift" />
-          <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PersonalPhoto" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ContractPhoto" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Users" FromRole="Users" ToRole="Orders" />
+          <NavigationProperty Name="RoleUsers" Relationship="Self.FK_Users_RoleUsers" FromRole="Users" ToRole="RoleUsers" />
+          <NavigationProperty Name="StatusUsers" Relationship="Self.FK_Users_StatusUsers" FromRole="Users" ToRole="StatusUsers" />
+          <NavigationProperty Name="WorkShift" Relationship="Self.FK_WorkShift_Users" FromRole="Users" ToRole="WorkShift" />
         </EntityType>
         <EntityType Name="WayPay">
           <Key>
             <PropertyRef Name="ID_Pay" />
           </Key>
           <Property Name="ID_Pay" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NameWayPay" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Orders" Relationship="CafeModel.FK_Orders_WayPay" FromRole="WayPay" ToRole="Orders" />
+          <Property Name="NameWayPay" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_WayPay" FromRole="WayPay" ToRole="Orders" />
         </EntityType>
         <EntityType Name="WorkShift">
           <Key>
@@ -505,11 +465,13 @@
           <Property Name="ID_WorkShift" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DateShift" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ID_User" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Users" Relationship="CafeModel.FK_WorkShift_Users" FromRole="WorkShift" ToRole="Users" />
+          <Property Name="ID_Table" Type="Int32" />
+          <NavigationProperty Name="Tables" Relationship="Self.FK_WorkShift_Tables" FromRole="WorkShift" ToRole="Tables" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_WorkShift_Users" FromRole="WorkShift" ToRole="Users" />
         </EntityType>
         <Association Name="FK_Check_Orders">
-          <End Type="CafeModel.Orders" Role="Orders" Multiplicity="1" />
-          <End Type="CafeModel.Check" Role="Check" Multiplicity="*" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="Check" Type="Self.Check" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Orders">
               <PropertyRef Name="ID_Order" />
@@ -520,8 +482,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Food_TypeFood">
-          <End Type="CafeModel.TypeFood" Role="TypeFood" Multiplicity="1" />
-          <End Type="CafeModel.Food" Role="Food" Multiplicity="*" />
+          <End Role="TypeFood" Type="Self.TypeFood" Multiplicity="1" />
+          <End Role="Food" Type="Self.Food" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TypeFood">
               <PropertyRef Name="ID_TypeFood" />
@@ -532,8 +494,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ListOrder_Food">
-          <End Type="CafeModel.Food" Role="Food" Multiplicity="1" />
-          <End Type="CafeModel.ListOrder" Role="ListOrder" Multiplicity="*" />
+          <End Role="Food" Type="Self.Food" Multiplicity="1" />
+          <End Role="ListOrder" Type="Self.ListOrder" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Food">
               <PropertyRef Name="ID_Food" />
@@ -544,8 +506,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ListOrder_Orders">
-          <End Type="CafeModel.Orders" Role="Orders" Multiplicity="1" />
-          <End Type="CafeModel.ListOrder" Role="ListOrder" Multiplicity="*" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="ListOrder" Type="Self.ListOrder" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Orders">
               <PropertyRef Name="ID_Order" />
@@ -556,8 +518,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Orders_StatusOrder">
-          <End Type="CafeModel.StatusOrder" Role="StatusOrder" Multiplicity="1" />
-          <End Type="CafeModel.Orders" Role="Orders" Multiplicity="*" />
+          <End Role="StatusOrder" Type="Self.StatusOrder" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="StatusOrder">
               <PropertyRef Name="ID_StatusOrder" />
@@ -568,8 +530,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Orders_Tables">
-          <End Type="CafeModel.Tables" Role="Tables" Multiplicity="1" />
-          <End Type="CafeModel.Orders" Role="Orders" Multiplicity="*" />
+          <End Role="Tables" Type="Self.Tables" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tables">
               <PropertyRef Name="ID_Table" />
@@ -580,8 +542,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Orders_Users">
-          <End Type="CafeModel.Users" Role="Users" Multiplicity="1" />
-          <End Type="CafeModel.Orders" Role="Orders" Multiplicity="*" />
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="ID_User" />
@@ -592,8 +554,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Orders_WayPay">
-          <End Type="CafeModel.WayPay" Role="WayPay" Multiplicity="1" />
-          <End Type="CafeModel.Orders" Role="Orders" Multiplicity="*" />
+          <End Role="WayPay" Type="Self.WayPay" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="WayPay">
               <PropertyRef Name="ID_Pay" />
@@ -604,8 +566,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Users_RoleUsers">
-          <End Type="CafeModel.RoleUsers" Role="RoleUsers" Multiplicity="1" />
-          <End Type="CafeModel.Users" Role="Users" Multiplicity="*" />
+          <End Role="RoleUsers" Type="Self.RoleUsers" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="RoleUsers">
               <PropertyRef Name="ID_Role" />
@@ -616,8 +578,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Users_StatusUsers">
-          <End Type="CafeModel.StatusUsers" Role="StatusUsers" Multiplicity="1" />
-          <End Type="CafeModel.Users" Role="Users" Multiplicity="*" />
+          <End Role="StatusUsers" Type="Self.StatusUsers" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="StatusUsers">
               <PropertyRef Name="ID_Status" />
@@ -627,9 +589,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WorkShift_Tables">
+          <End Role="Tables" Type="Self.Tables" Multiplicity="0..1" />
+          <End Role="WorkShift" Type="Self.WorkShift" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tables">
+              <PropertyRef Name="ID_Table" />
+            </Principal>
+            <Dependent Role="WorkShift">
+              <PropertyRef Name="ID_Table" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_WorkShift_Users">
-          <End Type="CafeModel.Users" Role="Users" Multiplicity="1" />
-          <End Type="CafeModel.WorkShift" Role="WorkShift" Multiplicity="*" />
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="WorkShift" Type="Self.WorkShift" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="ID_User" />
@@ -639,6 +613,69 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityContainer Name="CafeEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Check" EntityType="Self.Check" />
+          <EntitySet Name="Food" EntityType="Self.Food" />
+          <EntitySet Name="ListOrder" EntityType="Self.ListOrder" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" />
+          <EntitySet Name="RoleUsers" EntityType="Self.RoleUsers" />
+          <EntitySet Name="StatusOrder" EntityType="Self.StatusOrder" />
+          <EntitySet Name="StatusUsers" EntityType="Self.StatusUsers" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Tables" EntityType="Self.Tables" />
+          <EntitySet Name="TypeFood" EntityType="Self.TypeFood" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="WayPay" EntityType="Self.WayPay" />
+          <EntitySet Name="WorkShift" EntityType="Self.WorkShift" />
+          <AssociationSet Name="FK_Check_Orders" Association="Self.FK_Check_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Check" EntitySet="Check" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Food_TypeFood" Association="Self.FK_Food_TypeFood">
+            <End Role="TypeFood" EntitySet="TypeFood" />
+            <End Role="Food" EntitySet="Food" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ListOrder_Food" Association="Self.FK_ListOrder_Food">
+            <End Role="Food" EntitySet="Food" />
+            <End Role="ListOrder" EntitySet="ListOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ListOrder_Orders" Association="Self.FK_ListOrder_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="ListOrder" EntitySet="ListOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_StatusOrder" Association="Self.FK_Orders_StatusOrder">
+            <End Role="StatusOrder" EntitySet="StatusOrder" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Tables" Association="Self.FK_Orders_Tables">
+            <End Role="Tables" EntitySet="Tables" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Users" Association="Self.FK_Orders_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_WayPay" Association="Self.FK_Orders_WayPay">
+            <End Role="WayPay" EntitySet="WayPay" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_RoleUsers" Association="Self.FK_Users_RoleUsers">
+            <End Role="RoleUsers" EntitySet="RoleUsers" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_StatusUsers" Association="Self.FK_Users_StatusUsers">
+            <End Role="StatusUsers" EntitySet="StatusUsers" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkShift_Tables" Association="Self.FK_WorkShift_Tables">
+            <End Role="Tables" EntitySet="Tables" />
+            <End Role="WorkShift" EntitySet="WorkShift" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkShift_Users" Association="Self.FK_WorkShift_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="WorkShift" EntitySet="WorkShift" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -648,126 +685,127 @@
           <EntitySetMapping Name="Check">
             <EntityTypeMapping TypeName="CafeModel.Check">
               <MappingFragment StoreEntitySet="Check">
-                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-                <ScalarProperty Name="DateCheck" ColumnName="DateCheck" />
-                <ScalarProperty Name="ID_Order" ColumnName="ID_Order" />
                 <ScalarProperty Name="ID_Check" ColumnName="ID_Check" />
+                <ScalarProperty Name="ID_Order" ColumnName="ID_Order" />
+                <ScalarProperty Name="DateCheck" ColumnName="DateCheck" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Food">
             <EntityTypeMapping TypeName="CafeModel.Food">
               <MappingFragment StoreEntitySet="Food">
-                <ScalarProperty Name="ID_TypeFood" ColumnName="ID_TypeFood" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="NameFood" ColumnName="NameFood" />
                 <ScalarProperty Name="ID_Food" ColumnName="ID_Food" />
+                <ScalarProperty Name="NameFood" ColumnName="NameFood" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ID_TypeFood" ColumnName="ID_TypeFood" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ListOrder">
             <EntityTypeMapping TypeName="CafeModel.ListOrder">
               <MappingFragment StoreEntitySet="ListOrder">
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="ID_Food" ColumnName="ID_Food" />
-                <ScalarProperty Name="ID_Order" ColumnName="ID_Order" />
                 <ScalarProperty Name="ID_ListOrder" ColumnName="ID_ListOrder" />
+                <ScalarProperty Name="ID_Order" ColumnName="ID_Order" />
+                <ScalarProperty Name="ID_Food" ColumnName="ID_Food" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="CafeModel.Orders">
               <MappingFragment StoreEntitySet="Orders">
-                <ScalarProperty Name="DateOrder" ColumnName="DateOrder" />
-                <ScalarProperty Name="ID_Status" ColumnName="ID_Status" />
-                <ScalarProperty Name="ID_WayPay" ColumnName="ID_WayPay" />
-                <ScalarProperty Name="ID_User" ColumnName="ID_User" />
-                <ScalarProperty Name="ID_Table" ColumnName="ID_Table" />
                 <ScalarProperty Name="ID_Order" ColumnName="ID_Order" />
+                <ScalarProperty Name="ID_Table" ColumnName="ID_Table" />
+                <ScalarProperty Name="ID_User" ColumnName="ID_User" />
+                <ScalarProperty Name="ID_WayPay" ColumnName="ID_WayPay" />
+                <ScalarProperty Name="ID_Status" ColumnName="ID_Status" />
+                <ScalarProperty Name="DateOrder" ColumnName="DateOrder" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RoleUsers">
             <EntityTypeMapping TypeName="CafeModel.RoleUsers">
               <MappingFragment StoreEntitySet="RoleUsers">
-                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
                 <ScalarProperty Name="ID_Role" ColumnName="ID_Role" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="StatusOrder">
             <EntityTypeMapping TypeName="CafeModel.StatusOrder">
               <MappingFragment StoreEntitySet="StatusOrder">
-                <ScalarProperty Name="NameStatusOrder" ColumnName="NameStatusOrder" />
                 <ScalarProperty Name="ID_StatusOrder" ColumnName="ID_StatusOrder" />
+                <ScalarProperty Name="NameStatusOrder" ColumnName="NameStatusOrder" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="StatusUsers">
             <EntityTypeMapping TypeName="CafeModel.StatusUsers">
               <MappingFragment StoreEntitySet="StatusUsers">
-                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
                 <ScalarProperty Name="ID_Status" ColumnName="ID_Status" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
             <EntityTypeMapping TypeName="CafeModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tables">
             <EntityTypeMapping TypeName="CafeModel.Tables">
               <MappingFragment StoreEntitySet="Tables">
-                <ScalarProperty Name="NameTable" ColumnName="NameTable" />
                 <ScalarProperty Name="ID_Table" ColumnName="ID_Table" />
+                <ScalarProperty Name="NameTable" ColumnName="NameTable" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TypeFood">
             <EntityTypeMapping TypeName="CafeModel.TypeFood">
               <MappingFragment StoreEntitySet="TypeFood">
-                <ScalarProperty Name="NameTypeFood" ColumnName="NameTypeFood" />
                 <ScalarProperty Name="ID_TypeFood" ColumnName="ID_TypeFood" />
+                <ScalarProperty Name="NameTypeFood" ColumnName="NameTypeFood" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="CafeModel.Users">
               <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Login" ColumnName="Login" />
-                <ScalarProperty Name="ContractPhoto" ColumnName="ContractPhoto" />
-                <ScalarProperty Name="PersonalPhoto" ColumnName="PersonalPhoto" />
-                <ScalarProperty Name="ID_Status" ColumnName="ID_Status" />
-                <ScalarProperty Name="ID_Role" ColumnName="ID_Role" />
-                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="ID_User" ColumnName="ID_User" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="ID_Role" ColumnName="ID_Role" />
+                <ScalarProperty Name="ID_Status" ColumnName="ID_Status" />
+                <ScalarProperty Name="PersonalPhoto" ColumnName="PersonalPhoto" />
+                <ScalarProperty Name="ContractPhoto" ColumnName="ContractPhoto" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="WayPay">
             <EntityTypeMapping TypeName="CafeModel.WayPay">
               <MappingFragment StoreEntitySet="WayPay">
-                <ScalarProperty Name="NameWayPay" ColumnName="NameWayPay" />
                 <ScalarProperty Name="ID_Pay" ColumnName="ID_Pay" />
+                <ScalarProperty Name="NameWayPay" ColumnName="NameWayPay" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="WorkShift">
             <EntityTypeMapping TypeName="CafeModel.WorkShift">
               <MappingFragment StoreEntitySet="WorkShift">
-                <ScalarProperty Name="ID_User" ColumnName="ID_User" />
-                <ScalarProperty Name="DateShift" ColumnName="DateShift" />
                 <ScalarProperty Name="ID_WorkShift" ColumnName="ID_WorkShift" />
+                <ScalarProperty Name="DateShift" ColumnName="DateShift" />
+                <ScalarProperty Name="ID_User" ColumnName="ID_User" />
+                <ScalarProperty Name="ID_Table" ColumnName="ID_Table" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

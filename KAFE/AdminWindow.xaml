@@ -157,8 +157,10 @@
             </DataGrid>
             <Label Content="Вы выбрали:" FontSize="24" HorizontalAlignment="Left" Margin="613,74,0,0" VerticalAlignment="Top" Width="260"/>
             <TextBlock x:Name="txtuserlastname" HorizontalAlignment="Left" FontSize="24"  Margin="613,121,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Height="39" Width="260"/>
-            <Button x:Name="btnaddsmena" Content="Добавить работника на смену" HorizontalAlignment="Left" Margin="641,328,0,0" VerticalAlignment="Top" Width="201" Height="62" Click="btnaddsmena_Click"/>
+            <Button x:Name="btnaddsmena" Content="Добавить работника на смену" HorizontalAlignment="Left" Margin="644,451,0,0" VerticalAlignment="Top" Width="201" Height="62" Click="btnaddsmena_Click"/>
             <Label Content="Работники на смене:" FontSize="24" HorizontalAlignment="Left" Margin="49,328,0,0" VerticalAlignment="Top" Width="260"/>
+            <Label Content="Выберите столик:" FontSize="24" HorizontalAlignment="Left" Margin="613,310,0,0" VerticalAlignment="Top" Width="260"/>
+            <ComboBox Name="combotable" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Top" Width="260" Margin="613,352,0,0" DisplayMemberPath="NameTable" Height="49"/>
 
         </Grid>
         <Grid x:Name="gridreport" Visibility="Hidden">

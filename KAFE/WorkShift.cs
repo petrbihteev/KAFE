@@ -17,7 +17,9 @@ namespace KAFE
         public int ID_WorkShift { get; set; }
         public System.DateTime DateShift { get; set; }
         public int ID_User { get; set; }
+        public Nullable<int> ID_Table { get; set; }
     
+        public virtual Tables Tables { get; set; }
         public virtual Users Users { get; set; }
     }
 }
